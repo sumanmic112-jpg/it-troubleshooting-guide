@@ -1,0 +1,1268 @@
+Scenario - "User cannot connect to Wi-Fi"
+
+Symptoms ::
+
+Wifi Network  is visible on the Network list
+Attempting to conncet but not succeded
+Error msg - Unable to connect this network
+Unavailble internet connection through this Wifi connection
+other device is not facing the same issue.
+
+
+INITIAL TS steps performed :
+confirm the wifi is enabled on the user's device
+verify the correcrt wifi network is selected
+check and re-entered the password wifi password
+Disconnect the save Wifi network and try to connect again
+Restart the user's device
+check other device can connect to that wifi network or not
+Restart the Wifi Point.
+
+
+Technical TS steps Performed;
+Verify the issue is specific to the one user's device or affecting many others.
+then I checked the Device IP Address and confirm weather it is recieving a valid DHCP lease.
+Verify DNS and Default gateway configuration
+Check for Authentication or Credential errors.
+Review wifi adapter status and driver health
+Check for MAC Address filtering, Access control restrictions, or device management policies.
+Verify the wireless access point or router status and access capacity.
+
+
+## DNS troubleshooting
+
+Scenario- DNS is  not resolving.
+
+step-1 Identify the Problem
+Ask the user
+a/ What website/application are you trying to access?
+b/ Is the issue happening on one device or multiple devices?
+c/when did the issue start
+d/ can you access the website by IP address?
+e/ Are you connect through the wifi, LAN, VPN or a corporate netwrok?
+f/ Is the problem affecting all websites or only a specific domain?
+g/Do other users have the same problem?
+
+Before basic TS DNS make sure the machine has network connectivity.
+ipconfig /all 
+to check IP4 addr, default gateway, DNS Servers, DHCP enables,
+169.254.x.x -device didn't recv an IP From DHCP.
+
+Then test the gateway: ping <default-gateway>
+Test internet connectivity without DNS : ping 8.8.8.8
+If ping fails: ICMP may be blocked.
+
+check the configured DNS server : ipconfig /all
+
+then check nslookup google.com 
+This tells you that DNS resolution is working.
+
+If you see something like:
+DNS request timed out.
+timeout was 2 seconds.
+or:
+
+*** dns.company.local can't find example.com: Server failed
+then you have evidence of a DNS-resolution problem.
+
+test a specific DNS server : nslookup google.com 8.8.8.8
+
+check whether only one domain is affected
+user says" I can't access app/company.com then RUN nslookup app.company.com and then test another domain nslookup google.com
+if, google.com --fails/ microsoft.com --fails/ company.com --fails
+
+Reason may be 
+DNS Server unavailable, Incorrect DNS configuration, Network/VPN problem,DNS Service Problem, Firewall blocking DNS, DHCP Assigning incorrect DNS Servers.
+
+if, 2 of them works but company's websites fails then,
+investigate:
+DNS record missing, Incorrect DNS record, Internal DNS zone problem, split DNS/VPN configuration , Domain specific DNS SERVER ISSUE
+
+
+CLEAR THE LOCAL DNS CACHE
+RUN ipconfig /flushdns then test nslookup google.com and try the application website again.
+
+
+RENEW THE IP Configuration
+as DNS configuration comes from DHCP, renew the lease:
+ipconfig /release
+ipconfig /renew then, ipconfig /all
+
+check weather the correct 
+IP ADDRESS, default gateway, dns server
+
+check the DNS SERVICE /SERVER
+FOR SUPPORTING THE DNS infrastructre go to DNS SERVER :Get-DnsClientServerAddress
+
+
+
+My COMPUTER IS RUNNING SLOWLY
+
+First understand the complaint
+
+when did the computer start becoming slow"
+is it slow alltime or only when running a particular app"
+Does it take a long time to boot"
+is the computer slow when opening applications"
+is the mouse/keyboard responding slowly"
+is the internet slow, or is the computer itself slow"
+Does the issue occur after connecting to VPN
+How many applications/tabs are open"
+was any software recently installed or updated"
+has the computer recently received a windows update
+is the problem affecting only this user or multiiple user,\\\
+
+Check TASK MANAGER "ctrl + shift + Esc /pROCESS - Details / performance
+check CPU, Memory, Disk, Network, GPU
+services.msc / Get-Service check running service
+Windows Security → Virus & threat protection
+Settings → Windows Update
+eventvwr.msc Event Viewer
+Get-PhysicalDisk--physical health
+sfc /scannow -- system files  if neccesary DISM /Online /Cleanup-Image /RestoreHealth
+devmgmt.msc -check driver
+
+resmon.exe --Resource Monitor
+more detailed information about
+CPU
+Memory
+Disk
+Network
+
+perfmon.exe --Performance Monitor can track counters such as:
+Processor utilization
+Memory
+Disk activity
+Network activity
+Process performance
+
+Log in
+You said:
+
+"User cannot connect to Wi-Fi"
+
+ChatGPT said:
+If you’re looking for a clearer/professional wording:
+
+“The user is unable to connect to Wi-Fi.”
+
+
+You said:
+
+"User cannot connect to Wi-Fi"  in detail for technical support
+
+ChatGPT said:
+Here’s a detailed technical-support version you can use in a ticket or incident report:
+
+:::writing{variant="document" id="58321" title="Technical Support Issue Description"}
+
+Issue: Unable to Connect to Wi-Fi
+Issue Description: The user is currently unable to connect their device to the Wi-Fi network. The Wi-Fi network is visible on the device, but the connection cannot be established successfully.
+
+Observed Symptoms:
+
+The user can see the required Wi-Fi network in the available networks list.
+When attempting to connect, the connection fails or does not complete.
+The device may repeatedly prompt for the Wi-Fi password or display a message such as “Unable to connect to this network.”
+Internet access is unavailable through the Wi-Fi connection.
+Other devices may or may not be experiencing the same issue.
+Initial Troubleshooting Performed:
+
+Confirmed that Wi-Fi is enabled on the user's device.
+Verified that the correct Wi-Fi network/SSID was selected.
+Checked and re-entered the Wi-Fi password.
+Disconnected/forgot the saved Wi-Fi network and attempted to reconnect.
+Restarted the user's device.
+Checked whether other devices can connect to the same Wi-Fi network.
+Restarted the Wi-Fi router/access point, if applicable.
+Technical Checks Required:
+
+Verify whether the issue is specific to the user's device or affects multiple users.
+Check the device's IP address and confirm whether it is receiving a valid DHCP lease.
+Verify DNS and default gateway configuration.
+Check for authentication or credential-related errors.
+Review Wi-Fi adapter status and driver health.
+Check for MAC address filtering, access-control restrictions, or device-management policies.
+Verify the wireless access point/router status and available capacity.
+Review relevant router, access-point, or authentication-server logs for connection failures.
+Expected Result: The user's device should successfully authenticate with the Wi-Fi network, obtain a valid IP address, and establish internet/network connectivity.
+
+Current Status: User remains unable to connect to Wi-Fi. Further troubleshooting is required to identify whether the root cause is related to the user's device, wireless configuration, authentication, network infrastructure, or internet connectivity. :::
+
+If this is for an IT help-desk ticket, I can also turn it into a concise Issue / Troubleshooting / Root Cause / Resolution format.
+
+
+
+
+Protonyx Data Services S.A.
+Multi-WAN Bonding & WAN Optimization | comBOX
+Boost speed and uptime with multi-WAN bonding.
+Ad
+
+You said:
+
+suppose you asked me "DNS is not resolving"  then as a Technical support what should i do to resolve the issue ...tell me from start to end and also which tool should i use to perform as a technical support.
+
+ChatGPT said:
+Absolutely. If a user reports “DNS is not resolving”, a technical-support engineer should troubleshoot it systematically—from confirming the symptom to identifying whether the problem is with the client, DNS server, network, or domain itself.
+
+DNS troubleshooting: Start to end
+1. First, understand the problem
+Ask the user:
+
+What website/application are you trying to access?
+Is the issue happening on one device or multiple devices?
+Can you access websites by IP address?
+When did the issue start?
+Are you connected through Wi-Fi, LAN, VPN, or a corporate network?
+Is the problem affecting all websites or only a specific domain?
+Do other users have the same problem?
+For example:
+
+User can access 8.8.8.8 but cannot access google.com.
+That strongly suggests a DNS-resolution problem rather than a general internet-connectivity problem.
+
+2. Check basic network connectivity
+Before troubleshooting DNS, make sure the machine actually has network connectivity.
+
+Windows
+Open Command Prompt:
+
+ipconfig /all
+Check:
+
+IPv4 address
+Default Gateway
+DNS Servers
+DHCP enabled
+Whether the IP is something like 169.254.x.x
+A 169.254.x.x address usually indicates that the computer did not receive an IP address from DHCP.
+
+Then test the gateway:
+
+ping <default-gateway>
+Example:
+
+ping 192.168.1.1
+If the gateway cannot be reached, don't start changing DNS settings yet. You likely have a network/connectivity problem.
+
+3. Test internet connectivity without DNS
+Try:
+
+ping 8.8.8.8
+You can also test:
+
+ping 1.1.1.1
+Interpret the result
+If ping succeeds:
+
+Reply from 8.8.8.8...
+Internet connectivity is probably working, so investigate DNS.
+
+If ping fails:
+
+Don't immediately conclude that the internet is down—ICMP may be blocked. Test with another method, such as:
+
+curl https://1.1.1.1
+or open a known website/application.
+
+4. Check the configured DNS server
+Run:
+
+ipconfig /all
+Look for:
+
+DNS Servers . . . . . . . . . : 192.168.1.1
+or a corporate DNS server such as:
+
+10.10.10.10
+10.10.10.11
+Ask:
+
+Is this the DNS server that this machine is supposed to use?
+
+For a corporate environment, don't randomly replace the corporate DNS server with Google or Cloudflare DNS. Internal domains may only resolve through the organization's DNS infrastructure.
+
+5. Use nslookup — one of your most important DNS tools
+Run:
+
+nslookup google.com
+You might see:
+
+Server:  dns.company.local
+Address: 10.10.10.10
+
+Non-authoritative answer:
+Name:    google.com
+Addresses: 142.250.x.x
+This tells you that DNS resolution is working.
+
+If you see something like:
+
+DNS request timed out.
+timeout was 2 seconds.
+or:
+
+*** dns.company.local can't find example.com: Server failed
+then you have evidence of a DNS-resolution problem.
+
+6. Test a specific DNS server
+This is extremely useful for isolating the problem.
+
+Try:
+
+nslookup google.com 8.8.8.8
+Then:
+
+nslookup google.com 1.1.1.1
+Now compare the results.
+
+Example
+Your company's DNS:
+
+nslookup google.com 10.10.10.10
+fails.
+
+But:
+
+nslookup google.com 8.8.8.8
+works.
+
+This suggests that the problem may be with the corporate DNS server or the path to it, rather than the user's computer's basic network connectivity.
+
+However, before changing the user's DNS, investigate why the corporate DNS is failing.
+
+7. Check whether only one domain is affected
+Suppose the user says:
+
+“I can't access app.company.com.”
+Run:
+
+nslookup app.company.com
+Then test another domain:
+
+nslookup google.com
+Scenario A — Everything fails
+google.com       → fails
+microsoft.com    → fails
+company.com      → fails
+Likely causes:
+
+DNS server unavailable
+Incorrect DNS configuration
+Network/VPN problem
+DNS service problem
+Firewall blocking DNS
+DHCP assigning incorrect DNS servers
+Scenario B — Only one domain fails
+google.com       → works
+microsoft.com    → works
+app.company.com  → fails
+Now investigate:
+
+DNS record missing
+Incorrect DNS record
+Internal DNS zone problem
+Split-DNS/VPN configuration
+Domain-specific DNS server issue
+8. Clear the local DNS cache
+Windows maintains a local DNS cache.
+
+Run:
+
+ipconfig /flushdns
+You should see:
+
+Successfully flushed the DNS Resolver Cache.
+Then test again:
+
+nslookup google.com
+and try the application/website again.
+
+9. Renew the IP configuration
+If the DNS information comes from DHCP, renew the lease:
+
+ipconfig /release
+ipconfig /renew
+Then:
+
+ipconfig /all
+Check whether the correct:
+
+IP address
+Default gateway
+DNS server
+have been assigned.
+
+10. Test DNS connectivity directly
+DNS normally uses UDP port 53, and sometimes TCP port 53.
+
+You can test TCP connectivity to a DNS server using PowerShell:
+
+Test-NetConnection 10.10.10.10 -Port 53
+Example:
+
+ComputerName     : 10.10.10.10
+RemotePort       : 53
+TcpTestSucceeded : True
+If TCP 53 fails, it doesn't necessarily prove DNS is broken because normal DNS queries commonly use UDP, but it is useful evidence when investigating firewall/network issues.
+
+11. Check the DNS service/server
+If you are supporting the DNS infrastructure, go to the DNS server.
+
+For Windows Server environments, use:
+
+DNS Manager
+
+You can open:
+
+Server Manager
+   ↓
+Tools
+   ↓
+DNS
+Check:
+
+DNS server is running
+Forward Lookup Zones
+DNS records
+Forwarders
+Conditional forwarders
+Root hints
+Event Viewer
+Server network connectivity
+You can also check the DNS service from PowerShell:
+
+Get-Service DNS
+You want to see something similar to:
+
+Status   Name   DisplayName
+------   ----   -----------
+Running  DNS    DNS Server
+12. Check the DNS record
+Suppose the problem is:
+
+server01.company.com
+Run:
+
+nslookup server01.company.com
+Check whether it returns the expected IP.
+
+For example:
+
+Name:    server01.company.com
+Address: 10.20.30.40
+If there is no answer, check the DNS zone.
+
+In DNS Manager:
+
+Forward Lookup Zones
+       ↓
+company.com
+       ↓
+server01
+Verify that the A record exists and points to the correct IP.
+
+For IPv6, also check the relevant AAAA record.
+
+13. Use Resolve-DnsName
+PowerShell provides a more detailed DNS troubleshooting tool:
+
+Resolve-DnsName google.com
+You can also specify a DNS server:
+
+Resolve-DnsName google.com -Server 8.8.8.8
+For an internal domain:
+
+Resolve-DnsName server01.company.com -Server 10.10.10.10
+This is often more useful than simply using ping.
+
+14. Check DNS suffix configuration
+For corporate environments, this can be very important.
+
+Run:
+
+ipconfig /all
+Look for:
+
+Primary DNS Suffix
+Connection-specific DNS Suffix
+DNS Suffix Search List
+For example:
+
+DNS Suffix Search List:
+company.com
+If a user types:
+
+ping server01
+the system may attempt:
+
+server01.company.com
+Incorrect DNS suffix configuration can therefore cause internal name-resolution problems.
+
+15. If VPN is involved, investigate Split DNS
+This is a very common corporate-support scenario.
+
+Example:
+
+The user connects to VPN and tries:
+
+internal-app.company.com
+It doesn't resolve.
+
+But:
+
+google.com
+works.
+
+Possible cause:
+
+VPN didn't push corporate DNS servers
+DNS suffix wasn't pushed
+Split-DNS configuration is incorrect
+VPN client configuration is broken
+Corporate DNS isn't reachable through the VPN
+Check:
+
+ipconfig /all
+and:
+
+nslookup internal-app.company.com
+Then compare DNS configuration before and after connecting to VPN.
+
+16. Check firewall/security software
+If the DNS server is correct but queries aren't reaching it, investigate:
+
+Windows Firewall
+Corporate firewall
+Endpoint security
+Network firewall
+VPN security policies
+DNS filtering/security products
+You can use packet capture when necessary.
+
+Tool: Wireshark
+Wireshark official website
+
+Capture traffic while running:
+
+nslookup google.com
+Look for DNS traffic:
+
+Client → DNS Server : UDP 53
+DNS Server → Client : UDP 53
+You can filter Wireshark with:
+
+dns
+or:
+
+udp.port == 53
+This lets you determine whether:
+
+The DNS request leaves the client.
+The request reaches the DNS server.
+The DNS server responds.
+The response makes it back to the client.
+17. Check DNS server forwarding
+Suppose:
+
+Client
+   ↓
+Corporate DNS
+   ↓
+Internet DNS
+The client may successfully reach the corporate DNS, but the corporate DNS might be unable to resolve external domains.
+
+On the DNS server, check Forwarders.
+
+For Windows DNS:
+
+DNS Manager
+   ↓
+DNS Server
+   ↓
+Properties
+   ↓
+Forwarders
+Check whether the configured forwarders are:
+
+reachable
+responding
+correctly configured
+18. Check authoritative DNS
+For public-domain troubleshooting, use:
+
+nslookup
+or PowerShell:
+
+Resolve-DnsName example.com
+You can also use external DNS diagnostic services when appropriate.
+
+A useful concept is to determine whether the problem is:
+
+Client DNS
+     ↓
+Recursive DNS
+     ↓
+Root DNS
+     ↓
+TLD DNS
+     ↓
+Authoritative DNS
+For advanced troubleshooting, you can use:
+
+dig example.com
+On Linux/macOS, for example:
+
+dig example.com
+and:
+
+dig @8.8.8.8 example.com
+19. Compare with another working computer
+This is one of the easiest ways to isolate the problem.
+
+Take:
+
+Problem PC
+
+DNS Server: 10.10.10.10
+nslookup internal-app.company.com → FAIL
+Working PC
+
+DNS Server: 10.10.10.10
+nslookup internal-app.company.com → SUCCESS
+Now you know the DNS server itself is probably working, and the investigation should focus on the affected machine/network path.
+
+Conversely, if many computers fail, investigate the DNS infrastructure.
+
+20. Determine the root cause
+At this point, categorize the issue.
+
+Finding	Likely cause
+No IP address	DHCP/network problem
+Gateway unreachable	Network connectivity problem
+Internet IP works but names don't	DNS problem
+Wrong DNS server configured	DHCP/network configuration
+DNS server unreachable	Network/firewall/VPN
+DNS server reachable but doesn't respond	DNS server/service issue
+Only one domain fails	DNS record/zone issue
+Internal domains fail only on VPN	VPN/split-DNS issue
+DNS works after clearing cache	Local DNS cache problem
+Multiple users affected	Infrastructure/DNS-server issue
+21. Apply the appropriate fix
+Don't use the same fix for every DNS problem.
+
+If client DNS configuration is wrong
+Correct the DNS configuration through the organization's approved method—usually DHCP, Group Policy, MDM, or network configuration.
+
+If DNS cache is corrupted
+ipconfig /flushdns
+If DHCP provided incorrect DNS
+Fix the DHCP scope/options rather than manually changing every workstation.
+
+If DNS server service has failed
+Restart/repair the DNS service according to your organization's change-management procedure.
+
+If a DNS record is incorrect
+Correct the relevant:
+
+A record
+AAAA record
+CNAME record
+PTR record
+MX record, depending on the problem
+If VPN DNS is broken
+Correct the VPN/DNS configuration so corporate DNS is available when the VPN is connected.
+
+22. Verify the fix
+Never stop immediately after making the change.
+
+Run:
+
+ipconfig /flushdns
+Then:
+
+nslookup affected-domain.com
+Then:
+
+Resolve-DnsName affected-domain.com
+If appropriate, test:
+
+ping affected-domain.com
+Remember: successful ping isn't required for DNS to work because ICMP may be blocked.
+
+Finally, test the actual application or website the user was having trouble with.
+
+For example:
+
+DNS resolution: PASS
+Network connectivity: PASS
+Application access: PASS
+User confirmed: PASS
+23. Document the incident
+A good technical-support ticket should contain:
+
+Issue
+
+User unable to resolve app.company.com.
+Symptoms
+
+User can access the internet, but app.company.com does not resolve.
+Troubleshooting
+
+Verified IP connectivity and default gateway. Confirmed incorrect DNS server configuration. nslookup failed against the configured DNS server. Compared configuration with a working workstation.
+Root Cause
+
+DHCP scope was providing an incorrect DNS server address.
+Resolution
+
+Corrected the DHCP DNS configuration, renewed the client's DHCP lease, flushed the DNS cache, and verified successful DNS resolution.
+Validation
+
+nslookup app.company.com successfully returned the expected IP address. User confirmed the application is accessible.
+Tools you should know as a Technical Support Engineer
+Basic Windows tools
+Tool	Purpose
+ipconfig /all	IP/DNS/DHCP configuration
+ping	Basic connectivity testing
+nslookup	DNS query/testing
+ipconfig /flushdns	Clear local DNS cache
+ipconfig /release	Release DHCP address
+ipconfig /renew	Obtain DHCP configuration
+tracert	Trace network path
+pathping	Network path + packet loss
+netstat	Network connections
+Test-NetConnection	PowerShell connectivity testing
+Resolve-DnsName	Detailed DNS testing
+Event Viewer	Windows logs
+Wireshark	Packet-level troubleshooting
+For Linux
+ip addr
+ip route
+cat /etc/resolv.conf
+ping
+nslookup
+dig
+host
+traceroute
+resolvectl
+Infrastructure tools
+Depending on your organization:
+
+DNS Manager — Windows DNS
+DHCP Manager — DHCP configuration
+Active Directory Users and Computers — AD environment
+Group Policy Management — domain policies
+VPN management console
+Firewall management console
+Network monitoring system
+SIEM/log-management platform
+Wireshark — packet analysis
+The troubleshooting flow to remember
+Think of DNS troubleshooting like this:
+
+User reports:
+"DNS is not resolving"
+          │
+          ▼
+Is the device connected to the network?
+          │
+     ┌────┴────┐
+    NO         YES
+     │           │
+ Fix network     ▼
+             Does it have
+             a valid IP?
+                │
+           ┌────┴────┐
+          NO         YES
+           │           │
+       Fix DHCP       ▼
+                 Can it reach
+                 the gateway?
+                     │
+                ┌────┴────┐
+               NO         YES
+                │           │
+           Fix network      ▼
+                       Can it reach
+                       the DNS server?
+                           │
+                      ┌────┴────┐
+                     NO         YES
+                      │           │
+                Network/VPN/      ▼
+                firewall       Does DNS
+                investigation    respond?
+                                  │
+                             ┌────┴────┐
+                            NO         YES
+                             │           │
+                       DNS server/    Check record,
+                       firewall       suffix, cache,
+                       investigation  application
+                                          │
+                                          ▼
+                                   Verify & document
+The key tools I'd expect a Technical Support Engineer to reach for first are ipconfig /all → ping → nslookup → Resolve-DnsName → Test-NetConnection → DNS Manager/Wireshark, in roughly that order. This prevents you from changing DNS settings blindly and helps you identify the actual layer where the failure occurs.
+
+
+You said:
+
+"Computer is running slowly"
+
+ChatGPT said:
+If a user tells you “My computer is running slowly,” as a Technical Support Engineer you should troubleshoot it systematically rather than immediately deleting files or reinstalling Windows.
+
+1. First, understand the complaint
+Ask the user:
+
+When did the computer start becoming slow?
+Is it slow all the time or only when running a particular application?
+Does it take a long time to boot?
+Is the computer slow when opening applications?
+Is the mouse/keyboard responding slowly?
+Is the internet slow, or is the computer itself slow?
+Does the issue occur after connecting to VPN?
+How many applications/tabs are open?
+Was any software recently installed or updated?
+Has the computer recently received a Windows update?
+Is the problem affecting only this user or multiple users?
+Important distinction
+You need to determine whether the problem is:
+
+Computer performance
+
+Applications take a long time to open, CPU is high, system freezes, etc.
+or
+
+Network performance
+
+Websites/applications are slow, but the computer itself responds normally.
+These are different troubleshooting paths.
+
+2. Check Task Manager first
+On Windows, press:
+
+Ctrl + Shift + Esc
+This opens Task Manager.
+
+Go to:
+
+Processes → Details/Performance
+
+Check:
+
+CPU
+Memory
+Disk
+Network
+GPU
+Example
+You might see:
+
+CPU       95%
+Memory    82%
+Disk      100%
+Network   5%
+Now you have something measurable rather than simply “the computer is slow.”
+
+3. Check CPU usage
+Go to:
+
+Task Manager → Processes → CPU
+
+Sort by CPU usage.
+
+For example:
+
+Application             CPU
+--------------------------------
+Antimalware Service     45%
+Chrome                  25%
+Teams                   15%
+Other                   5%
+Identify which process is consuming the CPU.
+
+Don't immediately terminate the process
+First determine what it is.
+
+For example:
+
+Browser → investigate tabs/extensions
+Teams → application issue
+Antivirus → scan/update activity
+Windows Update → update activity
+Unknown executable → investigate further
+If it is a legitimate application and you're authorized to close it, you can close it and check whether performance improves.
+
+4. Check memory/RAM
+In Task Manager:
+
+Performance → Memory
+
+Look at:
+
+In use
+Available
+Committed
+Cached
+For example:
+
+Memory: 15.5 GB / 16 GB
+If memory is consistently close to maximum, the machine may be under memory pressure.
+
+Then go to:
+
+Processes → Memory
+
+Identify which applications are consuming the most RAM.
+
+Example:
+
+Chrome       5.2 GB
+Teams        1.5 GB
+Outlook      1.0 GB
+Other        5.0 GB
+Close unnecessary applications/tabs if appropriate.
+
+5. Check disk usage
+This is one of the most important checks.
+
+In Task Manager:
+
+Performance → Disk
+
+If you see:
+
+Disk: 100%
+go to:
+
+Processes → Disk
+
+Find which process is generating the disk activity.
+
+Possible causes include:
+
+Windows Update
+Antivirus scan
+OneDrive synchronization
+Search indexing
+Application activity
+Low free disk space
+Disk health problems
+Excessive paging
+6. Check available disk space
+Open:
+
+File Explorer → This PC
+
+Check the system drive, usually:
+
+C:
+If the drive is nearly full, Windows performance can suffer.
+
+You can also use:
+
+Get-Volume
+or:
+
+wmic logicaldisk get size,freespace,caption
+On newer Windows installations, PowerShell is preferable to relying on deprecated WMIC commands.
+
+What should you do?
+If storage is low:
+
+Remove unnecessary temporary files
+Empty Recycle Bin if appropriate
+Remove unnecessary downloads
+Use Windows Storage settings
+Review large files
+Remove approved/unneeded applications
+Do not randomly delete files from C:\Windows or other system directories.
+
+7. Check startup applications
+A computer that takes several minutes to become usable after login may have too many startup applications.
+
+Open:
+
+Task Manager → Startup apps
+
+Review applications such as:
+
+Teams
+OneDrive
+Adobe applications
+Updaters
+Vendor utilities
+Other unnecessary startup programs
+Disable only applications that are safe to disable and permitted by your organization's IT policy.
+
+Don't disable:
+
+Security software
+Required corporate agents
+Management tools
+VPN/security components
+Unknown system components
+8. Check running services
+Open:
+
+services.msc
+You can investigate services consuming resources or related to the suspected application.
+
+PowerShell can also help:
+
+Get-Service
+Don't start/stop random services. In a corporate environment, verify what the service does before changing it.
+
+9. Check for Windows updates
+Go to:
+
+Settings → Windows Update
+
+Check whether:
+
+Updates are downloading
+Updates are installing
+A restart is pending
+The machine recently completed a major update
+Windows Update can temporarily increase:
+
+CPU usage
+Disk usage
+Network usage
+If an update is actively running, let it complete where appropriate and then reboot according to your organization's policy.
+
+10. Check for malware/security activity
+If the system is unexpectedly slow, investigate security software activity.
+
+For Microsoft Defender, you can check Windows Security:
+
+Windows Security → Virus & threat protection
+
+Look for:
+
+Active scan
+Recent detections
+Security alerts
+Protection status
+Do not disable antivirus simply because it is consuming CPU.
+
+If malware is suspected, follow your organization's security/incident-response procedure.
+
+11. Check Event Viewer
+Open:
+
+eventvwr.msc
+Check:
+
+Windows Logs
+   ├── Application
+   ├── System
+   └── Security
+For performance problems, pay particular attention to System and Application logs.
+
+Look for recurring:
+
+Disk errors
+Application crashes
+Service failures
+Driver errors
+Hardware-related errors
+Don't treat every warning/error as the root cause. Look for events that correlate with the time the user experienced the problem.
+
+12. Check disk health
+If the computer has become progressively slower, freezes frequently, or has disk-related errors, investigate storage health.
+
+You can check basic drive status with:
+
+Get-PhysicalDisk
+Look at:
+
+HealthStatus
+OperationalStatus
+For example:
+
+HealthStatus: Healthy
+OperationalStatus: OK
+If the drive reports problems, escalate according to your organization's hardware-support procedure.
+
+For an SSD/HDD suspected of failing, don't repeatedly run aggressive repair operations before considering whether important data needs to be protected.
+
+13. Check system files
+If Windows itself appears unstable or corrupted, you can use Microsoft's built-in repair tools.
+
+Open Command Prompt as Administrator and run:
+
+sfc /scannow
+This checks Windows system files.
+
+If necessary, you can then use:
+
+DISM /Online /Cleanup-Image /RestoreHealth
+After completion, restart the computer and test again.
+
+In an enterprise environment, follow your organization's standard procedure before running repair commands.
+
+14. Check drivers
+Open:
+
+devmgmt.msc
+This opens Device Manager.
+
+Look for:
+
+Yellow warning symbols
+Display driver problems
+Storage-controller issues
+Network adapter problems
+Recently changed hardware/drivers
+Don't update every driver just because a newer version exists. Identify whether a driver is actually related to the symptoms.
+
+15. Check whether the problem is application-specific
+Suppose the user says:
+
+“Everything is fine except Outlook is extremely slow.”
+Don't troubleshoot the entire computer as if the hardware were failing.
+
+Test:
+
+Notepad → fast
+File Explorer → fast
+Chrome → fast
+Outlook → slow
+That suggests an application-specific problem.
+
+Then investigate the specific application:
+
+Application version
+Add-ins
+Cache
+Profile
+Local data
+Network connectivity
+Server/service status
+Application logs
+16. Check network performance separately
+If the user says:
+
+“Everything is slow when I use the internet.”
+Check whether the computer itself is slow.
+
+Test:
+
+ping <default-gateway>
+Then test an external destination where appropriate.
+
+You can also use:
+
+Test-NetConnection <hostname>
+If only network applications are slow while Windows itself responds normally, investigate the network, not CPU/RAM.
+
+17. Check VPN
+Corporate users frequently experience perceived slowness after connecting to VPN.
+
+Compare:
+
+VPN disconnected → normal
+VPN connected → slow
+If this pattern exists, investigate:
+
+VPN latency
+VPN client
+DNS
+Routing
+Bandwidth
+Corporate proxy
+Security inspection
+Split tunneling configuration
+This is especially important if applications hosted inside the company are slow but local applications work normally.
+
+18. Check Resource Monitor
+If Task Manager doesn't give enough information, use:
+
+resmon.exe
+Resource Monitor gives you more detailed information about:
+
+CPU
+Memory
+Disk
+Network
+For example, under Disk, you can identify which process is performing significant disk I/O and which files are being accessed.
+
+This is an excellent next step when Task Manager says Disk = 100% but you need more detail.
+
+19. Use Performance Monitor for deeper investigation
+For recurring or difficult performance problems, use:
+
+perfmon.exe
+Performance Monitor can track counters such as:
+
+Processor utilization
+Memory
+Disk activity
+Network activity
+Process performance
+This is more appropriate for advanced troubleshooting or problems that occur intermittently.
+
+20. Check Reliability Monitor
+Another very useful Windows tool is:
+
+perfmon /rel
+This opens Reliability Monitor.
+
+It provides a timeline of:
+
+Application crashes
+Windows failures
+Driver failures
+Updates
+Hardware-related problems
+If the computer became slow starting on a particular date, Reliability Monitor can help you correlate the issue with an update, driver installation, or application failure.
+
+Restart and retest
+
+Verify with the user ,Confirm
+Boot time improved
+application open normally
+No freezing
+no excessive CPU/RAM/Disk usage
+User's specific application works normally
+then document the result
+
+Issue 
+User reported that the windows computer was running slowly, with applications taking a long time to open.
+--Initial findings
+Task manager showed CPU utilization at 92% and high disk activity. Windows update was actively installing updates.
+--Troubleshooting performed
+verified CPU, memory, disk, and network utilization. Confirmed Windows Update activity. Checked available disk space and reviewed startup applications. No hardware or disk errors were identified.
+--Resolution
+Allowed Windows Update to complete, restarted the workstation, and verified normal CPU and disk utilization after reboot.
+Validation 
+User opened the affected applications and confirmed that system performance had returned to normal.
+
+
+Tool	Use
+Task Manager	CPU/RAM/Disk/startup applications
+Resource Monitor (resmon)	Detailed CPU/RAM/Disk/network analysis
+Performance Monitor (perfmon)	Long-term/deep performance monitoring
+Reliability Monitor (perfmon /rel)	Crashes and system-history analysis
+Event Viewer (eventvwr)	System/application/driver errors
+Device Manager (devmgmt.msc)	Driver/hardware investigation
+PowerShell	System/resource/health checks
+SFC	Windows system-file verification
+DISM	Windows component-image repair
+Windows Security	Malware/security investigation
+Task Manager → Startup apps	Startup-performance investigation
+Disk/Storage tools	Free space and disk health
+Wireshark	Network-level troubleshooting when slowness is network-related
+
+
+
+
+
+
+
+
+
